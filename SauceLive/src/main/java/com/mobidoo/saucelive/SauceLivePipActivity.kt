@@ -14,10 +14,12 @@ import android.webkit.WebViewClient
 class SauceLivePipActivity : Activity() {
     private lateinit var mContext: Context
     private lateinit var sauceliveView: SauceLiveView
-    private lateinit var linkUrl: String
+    private lateinit var broadcastId: String
+    private lateinit var accessToken: String
     private var pip = false
 
     companion object {
+        var member: Member? = null
         var sauceflexEnter: (() -> Unit)? = null
         var sauceflexMoveExit: (() -> Unit)? = null
         var sauceflexMoveLogin: (() -> Unit)? = null
@@ -35,8 +37,9 @@ class SauceLivePipActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_saucelive)
-        linkUrl = intent.getStringExtra("linkUrl") ?: ""
+        broadcastId = intent.getStringExtra("broadcastId") ?: ""
         pip = intent.getBooleanExtra("pip", false)
+        accessToken = intent.getStringExtra("accessToken") ?: ""
         init()
     }
 
@@ -54,7 +57,24 @@ class SauceLivePipActivity : Activity() {
     private fun init() {
         mContext = this
         sauceliveView = findViewById(R.id.saucelive)
-        sauceliveView.loadUrl(linkUrl)
+        sauceliveView.setInit(broadcastId)
+        if (member != null){
+            sauceliveView.setMemberObject(member!!, object :
+                MemberObjectCallback {
+                override fun onSuccess() {
+                    sauceliveView.load()
+                }
+
+                override fun onError(error: String?) {
+                    sauceliveView.load()
+                }
+            })
+        }else {
+            sauceliveView.setMemberToken(accessToken)
+            sauceliveView.load()
+        }
+
+
         sauceliveView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 return false
@@ -66,7 +86,7 @@ class SauceLivePipActivity : Activity() {
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                if (url?.contains(linkUrl) == true && pip) {
+                if (url?.contains(broadcastId) == true && pip) {
                     sauceliveView.hidePlayerUi()
                 }
             }

@@ -3,6 +3,7 @@ package com.mobidoo.saucelive
 import android.content.Context
 import android.os.Handler
 import android.util.AttributeSet
+import android.util.Log
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
@@ -15,13 +16,14 @@ class SauceLiveView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val webView: WebView
+    private var broadcastId: String? = null
+    private var userAccessToken: String? = null
+
     var webViewClient: WebViewClient = WebViewClient()
         set(value) {
             field = value
             webView.webViewClient = value
         }
-
-
 
     init {
         // 웹뷰를 생성하고 설정
@@ -40,10 +42,63 @@ class SauceLiveView @JvmOverloads constructor(
 
     }
 
-    // 웹뷰에 로드할 URL을 설정하는 메서드
-    fun loadUrl(url: String) {
-        webView.loadUrl(url)
+    fun setInit(broadcastId: String) {
+        this.broadcastId = broadcastId
     }
+
+    fun setMemberToken(userAccessToken: String) {
+        this.userAccessToken = userAccessToken
+    }
+
+    fun setMemberObject(
+        member: Member,
+        callback: MemberObjectCallback
+    ) {
+        if (broadcastId == null) {
+            throw Error("broadcastId is required")
+        }
+        val pattern = Regex("(lk|vc|vk)(.*-?)-")
+        val matchResult = pattern.find(broadcastId!!)
+        val partnerId = matchResult?.groupValues?.get(2) ?: ""
+
+        SauceLive.createUserAccessToken(
+            Member(
+                member.memberId,
+                member.nickName,
+                member.age,
+                member.gender,
+                member.memberType,
+                partnerId
+            ),
+            object : UserAccessTokenCallback {
+                override fun onSuccess(accessToken: String) {
+                    setMemberToken(accessToken)
+                    callback.onSuccess()
+                }
+
+                override fun onError(error: String?) {
+                    callback.onError(error)
+                }
+            }
+        )
+    }
+
+    fun load() {
+        if (broadcastId == null) {
+            throw Error("broadcastId is required")
+        }
+        if (userAccessToken == null) {
+            webView.loadUrl("https://player.sauceflex.com/broadcast/$broadcastId")
+        } else {
+            webView.loadUrl("https://player.sauceflex.com/broadcast/$broadcastId?accessToken=$userAccessToken")
+        }
+
+    }
+
+    // 웹뷰에 로드할 URL을 설정하는 메서드
+//    fun loadUrl(url: String) {
+//        webView.loadUrl(url)
+//    }
 
     fun hidePlayerUi() {
         webView.evaluateJavascript(
@@ -288,91 +343,6 @@ class SauceLiveView @JvmOverloads constructor(
             }
         }
     }
-
-//    class SauceJavaScriptInterface(private val context: Context, private val webview: WebView) {
-//        private val handler = Handler()
-//        var sauceflexEnter: (() -> Unit)? = null
-//        var sauceflexMoveExit: (() -> Unit)? = null
-//        var sauceflexMoveLogin: (() -> Unit)? = null
-//        var sauceflexOnShare: ((message: String) -> Unit)? = null
-//        var sauceflexPictureInPicture: (() -> Unit)? = null
-//        var sauceflexMoveBanner: ((message: String) -> Unit)? = null
-//        var sauceflexWebviewReloading: ((message: String) -> Unit)? = null
-//        var sauceflexMoveReward: ((message: String) -> Unit)? = null
-//        var sauceflexMoveProduct: ((message: String) -> Unit)? = null
-//        var sauceflexTokenError: ((message: String) -> Unit)? = null
-//
-//        @JavascriptInterface   // 처음 플레이어 진입시
-//        fun sauceflexEnter() {
-//            handler.post {
-//                sauceflexEnter?.invoke()
-//            }
-//        }
-//
-//        @JavascriptInterface   // 닫기 버튼 눌러 팝업에서 나가기시
-//        fun sauceflexMoveExit() {
-//            handler.post {
-//                sauceflexMoveExit?.invoke()
-//            }
-//        }
-//
-//        @JavascriptInterface   // 로그인 팝업에서 확인시
-//        fun sauceflexMoveLogin() {
-//            handler.post {
-//                sauceflexMoveLogin?.invoke()
-//            }
-//        }
-//
-//        @JavascriptInterface   // 공유하기
-//        fun sauceflexOnShare(message: String) {
-//            handler.post {
-//                sauceflexOnShare?.invoke(message)
-//            }
-//        }
-//
-//        @JavascriptInterface   // PIP 전환 버튼 클릭시, PIP 보기 전환시, 보여주고 있는 컴포넌트 GONE 처리를 자동으로 처리 합니다. (GONE 내용 ex: 좋아요 및 각정 플레이어 위에 띄워지는 버튼들)
-//        fun sauceflexPictureInPicture() {
-//            handler.post {
-//                sauceflexPictureInPicture?.invoke()
-//            }
-//        }
-//
-//        @JavascriptInterface   // 배너 클릭시 bannerId (배너 고유 아이디), linkUrl (배너에 등록된 URL), broadcastIdx (방송 번호)
-//        fun sauceflexMoveBanner(message: String) {
-//            handler.post {
-//                sauceflexMoveBanner?.invoke(message)
-//            }
-//        }
-//
-//        @JavascriptInterface   // 웹뷰 리로딩
-//        fun sauceflexWebviewReloading(message: String) {
-//            handler.post {
-//                sauceflexWebviewReloading?.invoke(message)
-//            }
-//        }
-//
-//        @JavascriptInterface   // 리워드 기능
-//        fun sauceflexMoveReward(message: String) {
-//            handler.post {
-//                sauceflexMoveReward?.invoke(message)
-//            }
-//        }
-//
-//
-//        @JavascriptInterface   // 상품 클릭시
-//        fun sauceflexMoveProduct(message: String) {
-//            handler.post {
-//                sauceflexMoveProduct?.invoke(message)
-//            }
-//        }
-//
-//        @JavascriptInterface   // 상품 클릭시
-//        fun sauceflexTokenError(message: String) {
-//            handler.post {
-//                sauceflexTokenError?.invoke(message)
-//            }
-//        }
-//    }
 
 }
 

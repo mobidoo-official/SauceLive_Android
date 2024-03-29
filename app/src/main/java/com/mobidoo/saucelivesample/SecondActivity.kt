@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.Toast
+import com.mobidoo.saucelive.Member
 import com.mobidoo.saucelive.SauceLive
 
 class SecondActivity : Activity() {
@@ -14,7 +15,7 @@ class SecondActivity : Activity() {
     private lateinit var btnSauceviewActivity: Button
     private lateinit var btnSauceActivity: Button
     private lateinit var btnSauceActivityPip: Button
-    private lateinit var linkUrl: String
+    private lateinit var broadcastId: String
     private lateinit var onEnter: CheckBox
     private lateinit var onMoveExit: CheckBox
     private lateinit var onMoveLogin: CheckBox
@@ -30,7 +31,7 @@ class SecondActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
-        linkUrl = intent.getStringExtra("linkUrl") ?: ""
+        broadcastId = intent.getStringExtra("broadcastId") ?: ""
         init()
     }
 
@@ -52,7 +53,7 @@ class SecondActivity : Activity() {
 
         btnSauceviewActivity.setOnClickListener() {
             val intent = Intent(this, SauceViewActivity::class.java)
-            intent.putExtra("linkUrl", linkUrl)
+            intent.putExtra("broadcastId", broadcastId)
             SauceViewActivity.onEnter = onEnter.isChecked
             SauceViewActivity.onMoveExit = onMoveExit.isChecked
             SauceViewActivity.onMoveLogin = onMoveLogin.isChecked
@@ -68,7 +69,9 @@ class SecondActivity : Activity() {
 
         btnSauceActivity.setOnClickListener {
             SauceLive.openPipActivity(
-                mContext, linkUrl, false,
+                mContext, broadcastId, false,
+                null,
+                Member("memberId", "nickName", "30", "m", null),
                 //onEnter
                 if (onEnter.isChecked) {
                     {
@@ -156,7 +159,9 @@ class SecondActivity : Activity() {
 
         btnSauceActivityPip.setOnClickListener {
             SauceLive.openPipActivity(
-                mContext, linkUrl, true,
+                mContext, broadcastId, true,
+                null,
+                Member("memberId", "nickName", "30", "m", null),
                 //onEnter
                 if (onEnter.isChecked) {
                     {
