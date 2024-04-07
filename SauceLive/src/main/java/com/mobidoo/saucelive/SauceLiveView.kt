@@ -95,11 +95,6 @@ class SauceLiveView @JvmOverloads constructor(
 
     }
 
-    // 웹뷰에 로드할 URL을 설정하는 메서드
-//    fun loadUrl(url: String) {
-//        webView.loadUrl(url)
-//    }
-
     fun hidePlayerUi() {
         webView.evaluateJavascript(
             "window.postMessage(\"sauceflexPictureInPictureOn\", \"*\");",
