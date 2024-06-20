@@ -262,8 +262,4 @@ class SauceLive {
             })
         }
     }
-
-    fun removeAccessToken() {
-
-    }
 }

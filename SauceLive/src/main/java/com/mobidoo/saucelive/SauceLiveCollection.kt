@@ -161,6 +161,13 @@ class SauceLiveCollection @JvmOverloads constructor(
         val userAccessToken = sharedPreference.getString("userAccessToken", null)
         return userAccessToken
     }
+    fun removeAccessToken() {
+        userAccessToken = null
+        val sharedPreference = context.getSharedPreferences("sauceflex", Context.MODE_PRIVATE)
+        val editor = sharedPreference.edit()
+        editor.remove("userAccessToken")
+        editor.apply()
+    }
 
     private class SauceflexMoveTopBannerJavaScriptInterface(
         val flexCollectMoveTopBanner: ((message: String) -> Unit),

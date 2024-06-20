@@ -109,6 +109,14 @@ class SauceLiveView @JvmOverloads constructor(
         return userAccessToken
     }
 
+    fun removeAccessToken() {
+        userAccessToken = null
+        val sharedPreference = context.getSharedPreferences("sauceflex", Context.MODE_PRIVATE)
+        val editor = sharedPreference.edit()
+        editor.remove("userAccessToken")
+        editor.apply()
+    }
+
     fun load() {
         if (broadcastId == null) {
             throw Error("broadcastId is required")
