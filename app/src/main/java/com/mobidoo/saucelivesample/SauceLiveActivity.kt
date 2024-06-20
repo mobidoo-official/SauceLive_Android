@@ -4,13 +4,17 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.Toast
 import com.mobidoo.saucelive.Member
 import com.mobidoo.saucelive.SauceLive
 
-class SecondActivity : Activity() {
+class SauceLiveActivity : Activity() {
     private lateinit var mContext: Context
     private lateinit var btnSauceviewActivity: Button
     private lateinit var btnSauceActivity: Button
@@ -26,11 +30,17 @@ class SecondActivity : Activity() {
     private lateinit var onMoveReward: CheckBox
     private lateinit var onMoveProduct: CheckBox
     private lateinit var onTokenError: CheckBox
+    private lateinit var radioGroup: RadioGroup
+    private lateinit var radioDev: RadioButton
+    private lateinit var radioStage: RadioButton
+    private lateinit var radioPrd: RadioButton
+    private lateinit var edittext: EditText
 
+    private var queryString: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_second)
+        setContentView(R.layout.activity_sauce_live)
         broadcastId = intent.getStringExtra("broadcastId") ?: ""
         init()
     }
@@ -50,10 +60,24 @@ class SecondActivity : Activity() {
         onMoveReward = findViewById(R.id.check_MoveReward)
         onMoveProduct = findViewById(R.id.check_MoveProduct)
         onTokenError = findViewById(R.id.check_TokenError)
+        radioGroup = findViewById(R.id.radio_group)
+        radioDev = findViewById(R.id.radio_dev)
+        radioStage = findViewById(R.id.radio_stage)
+        radioPrd = findViewById(R.id.radio_prod)
+        edittext = findViewById(R.id.edittext)
+
+        edittext.setHint("Enter query string here")
 
         btnSauceviewActivity.setOnClickListener() {
             val intent = Intent(this, SauceViewActivity::class.java)
             intent.putExtra("broadcastId", broadcastId)
+            intent.putExtra(
+                "urlPrefix",
+                if (radioDev.isChecked) "dev." else if (radioStage.isChecked) "stage." else ""
+            )
+            queryString = edittext.text.toString()
+            intent.putExtra("queryString", queryString)
+
             SauceViewActivity.onEnter = onEnter.isChecked
             SauceViewActivity.onMoveExit = onMoveExit.isChecked
             SauceViewActivity.onMoveLogin = onMoveLogin.isChecked
@@ -68,6 +92,7 @@ class SecondActivity : Activity() {
         }
 
         btnSauceActivity.setOnClickListener {
+            queryString = edittext.text.toString()
             SauceLive.openPipActivity(
                 mContext, broadcastId, false,
                 null,
@@ -154,10 +179,13 @@ class SecondActivity : Activity() {
                 },
                 { Toast.makeText(this, "PictureInPictureMode On", Toast.LENGTH_SHORT).show() },
                 { Toast.makeText(this, "PictureInPictureMode OFF", Toast.LENGTH_SHORT).show() },
+                if (radioDev.isChecked) "dev." else if (radioStage.isChecked) "stage." else "",
+                queryString
             )
         }
 
         btnSauceActivityPip.setOnClickListener {
+            queryString = edittext.text.toString()
             SauceLive.openPipActivity(
                 mContext, broadcastId, true,
                 null,
@@ -244,6 +272,8 @@ class SecondActivity : Activity() {
                 },
                 { Toast.makeText(this, "PictureInPictureMode On", Toast.LENGTH_SHORT).show() },
                 { Toast.makeText(this, "PictureInPictureMode OFF", Toast.LENGTH_SHORT).show() },
+                if (radioDev.isChecked) "dev." else if (radioStage.isChecked) "stage." else "",
+                queryString
             )
         }
 

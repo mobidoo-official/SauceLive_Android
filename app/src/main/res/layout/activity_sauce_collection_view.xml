@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:text="SauceLiveCollectionType : topBanner"
+                android:textSize="14sp"
+                android:background="@color/teal_200"/>
+
+            <com.mobidoo.saucelive.SauceLiveCollection
+                android:id="@+id/collection_top_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:text="SauceLiveCollectionType : broadcast"
+                android:textSize="14sp"
+                android:background="@color/teal_200"/>
+
+            <com.mobidoo.saucelive.SauceLiveCollection
+                android:id="@+id/collection_broadcast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:text="SauceLiveCollectionType : schedule"
+                android:textSize="14sp"
+                android:background="@color/teal_200"/>
+
+            <com.mobidoo.saucelive.SauceLiveCollection
+                android:id="@+id/collection_schedule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:text="SauceLiveCollectionType : broadcastTable"
+                android:textSize="14sp"
+                android:background="@color/teal_200"/>
+
+            <com.mobidoo.saucelive.SauceLiveCollection
+                android:id="@+id/collection_broadcast_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:text="SauceLiveCollectionType : curation"
+                android:textSize="14sp"
+                android:background="@color/teal_200"/>
+
+            <com.mobidoo.saucelive.SauceLiveCollection
+                android:id="@+id/collection_curation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:text="SauceLiveCollectionType : curationDetail"
+                android:textSize="14sp"
+                android:background="@color/teal_200"/>
+
+            <com.mobidoo.saucelive.SauceLiveCollection
+                android:id="@+id/collection_curation_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

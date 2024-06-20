@@ -17,7 +17,7 @@
             android:paddingVertical="5dp">
 
             <CheckBox
-                android:id="@+id/check_Enter"
+                android:id="@+id/check_stage_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true" />
@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="onEnter" />
+                android:text="stageMode" />
         </LinearLayout>
 
         <LinearLayout
@@ -36,7 +36,7 @@
             android:paddingVertical="5dp">
 
             <CheckBox
-                android:id="@+id/check_MoveExit"
+                android:id="@+id/check_move_top_banner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true" />
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="onMoveExit" />
+                android:text="onMoveTopBanner" />
         </LinearLayout>
 
         <LinearLayout
@@ -55,7 +55,7 @@
             android:paddingVertical="5dp">
 
             <CheckBox
-                android:id="@+id/check_MoveLogin"
+                android:id="@+id/check_move_content_banner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true" />
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="onMoveLogin" />
+                android:text="onMoveContentBanner" />
         </LinearLayout>
 
         <LinearLayout
@@ -74,7 +74,26 @@
             android:paddingVertical="5dp">
 
             <CheckBox
-                android:id="@+id/check_MoveProduct"
+                android:id="@+id/check_move_broadcast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="onMoveBroadcast" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp">
+
+            <CheckBox
+                android:id="@+id/check_move_product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true" />
@@ -84,6 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="onMoveProduct" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -93,7 +113,7 @@
             android:paddingVertical="5dp">
 
             <CheckBox
-                android:id="@+id/check_MoveBanner"
+                android:id="@+id/check_click_curation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true" />
@@ -102,7 +122,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="onMoveBanner" />
+                android:text="onClickCuration" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -112,7 +133,7 @@
             android:paddingVertical="5dp">
 
             <CheckBox
-                android:id="@+id/check_OnShare"
+                android:id="@+id/check_apply_for_notification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true" />
@@ -121,7 +142,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="onShare" />
+                android:text="onApplyForNotification" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -131,7 +153,7 @@
             android:paddingVertical="5dp">
 
             <CheckBox
-                android:id="@+id/check_PictureInPicture"
+                android:id="@+id/check_cancel_for_notification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true" />
@@ -140,94 +162,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="onPictureInPicture" />
+                android:text="onCancelForNotification" />
+
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="5dp">
-
-            <CheckBox
-                android:id="@+id/check_TokenError"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="onTokenError" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="5dp">
-
-            <CheckBox
-                android:id="@+id/check_WebviewReloading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="onWebviewReloading" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="5dp">
-
-            <CheckBox
-                android:id="@+id/check_MoveReward"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="onMoveReward" />
-        </LinearLayout>
-
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_sauceview_activity"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/edittext"
+        android:layout_marginTop="10dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        />
+
+    <EditText
+        android:id="@+id/edittext2"
         android:layout_marginTop="10dp"
-        android:text="Open SauceLiveView"
-        android:textAllCaps="false" />
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
 
     <Button
-        android:id="@+id/btn_sauce_activity"
+        android:id="@+id/btn_collection_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="Open SauceLivePipActivity"
-        android:textAllCaps="false" />
-
-    <Button
-        android:id="@+id/btn_sauce_activity_pip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="Open SauceLivePipActivity(PIP)"
+        android:text="Open SauceLiveCollectionView"
         android:textAllCaps="false" />
 
 

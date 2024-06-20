@@ -16,6 +16,7 @@ class SauceLivePipActivity : Activity() {
     private lateinit var sauceliveView: SauceLiveView
     private lateinit var broadcastId: String
     private lateinit var accessToken: String
+    private var urlPrefix: String = ""
     private var pip = false
 
     companion object {
@@ -40,6 +41,7 @@ class SauceLivePipActivity : Activity() {
         broadcastId = intent.getStringExtra("broadcastId") ?: ""
         pip = intent.getBooleanExtra("pip", false)
         accessToken = intent.getStringExtra("accessToken") ?: ""
+        urlPrefix = intent.getStringExtra("urlPrefix") ?: ""
         init()
     }
 
@@ -58,6 +60,7 @@ class SauceLivePipActivity : Activity() {
         mContext = this
         sauceliveView = findViewById(R.id.saucelive)
         sauceliveView.setInit(broadcastId)
+        sauceliveView.setMode(urlPrefix)
         if (member != null){
             sauceliveView.setMemberObject(member!!, object :
                 MemberObjectCallback {

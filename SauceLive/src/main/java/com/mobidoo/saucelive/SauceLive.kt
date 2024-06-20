@@ -31,12 +31,16 @@ class SauceLive {
             onMoveProduct: ((message: String) -> Unit)? = null,
             onTokenError: ((message: String) -> Unit)? = null,
             onPipModeOn: (() -> Unit)? = null,
-            onPipModeOff: (() -> Unit)? = null
+            onPipModeOff: (() -> Unit)? = null,
+            mode: String = "",
+            queryString: String = ""
         ) {
             val intent = Intent(context, SauceLivePipActivity::class.java)
             intent.putExtra("broadcastId", broadcastId)
             intent.putExtra("accessToken", accessToken)
             intent.putExtra("pip", pip)
+            intent.putExtra("urlPrefix", mode)
+            intent.putExtra("queryString", queryString)
 
             SauceLivePipActivity.member = member
             SauceLivePipActivity.sauceflexEnter = onEnter
@@ -257,5 +261,9 @@ class SauceLive {
                 }
             })
         }
+    }
+
+    fun removeAccessToken() {
+
     }
 }

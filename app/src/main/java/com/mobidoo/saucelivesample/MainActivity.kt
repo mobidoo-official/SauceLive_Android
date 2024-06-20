@@ -11,7 +11,8 @@ import android.widget.EditText
 class MainActivity : Activity() {
     private lateinit var mContext: Context
     private lateinit var editText: EditText
-    private lateinit var btnNext: Button
+    private lateinit var btnNextLive: Button
+    private lateinit var btnNextCollection: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,20 +22,29 @@ class MainActivity : Activity() {
 
     fun init() {
         mContext = this
-        editText = findViewById(R.id.editText)
-        btnNext = findViewById(R.id.btnNext)
+        editText = findViewById(R.id.edittext)
+        btnNextLive = findViewById(R.id.btn_next_live)
+        btnNextCollection = findViewById(R.id.btn_next_collection)
 
-        editText.setText("lkbutterand-ec0064a8d169438083e1c2ebacf91d25")
+        editText.setText("lkebay-43eb1c46292b4ce7aacadc1620821410")
         editText.setHint("Enter broadcastId")
         editText.inputType = InputType.TYPE_CLASS_TEXT
         editText.maxLines = 1
 
-
-        btnNext.setOnClickListener {
+        btnNextLive.setOnClickListener {
             val url = editText.text.toString()
-            val intent = Intent(mContext, SecondActivity::class.java)
+            val intent = Intent(mContext, SauceLiveActivity::class.java)
             intent.putExtra("broadcastId", url)
             startActivity(intent)
+        }
+
+        btnNextCollection.setOnClickListener {
+            startActivity(
+                Intent(
+                    mContext,
+                    SauceCollectionActivity::class.java
+                )
+            )
         }
     }
 }

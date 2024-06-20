@@ -26,8 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SecondActivity" ></activity>
+        <activity android:name=".SauceLiveActivity" ></activity>
         <activity android:name=".SauceViewActivity" ></activity>
+        <activity android:name=".SauceCollectionActivity" ></activity>
+        <activity android:name=".SauceCollectionViewActivity" ></activity>
     </application>
 
 </manifest>

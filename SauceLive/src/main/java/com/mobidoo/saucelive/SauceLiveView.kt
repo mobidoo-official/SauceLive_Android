@@ -15,6 +15,7 @@ class SauceLiveView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
+    private var urlPrefix: String = ""
     private val webView: WebView
     private var broadcastId: String? = null
     private var userAccessToken: String? = null
@@ -39,17 +40,32 @@ class SauceLiveView @JvmOverloads constructor(
 
         webView.webChromeClient = WebChromeClient()
         webView.settings.userAgentString = webView.settings.userAgentString + " sauce-sdk-android"
-
     }
 
     fun setInit(broadcastId: String) {
         this.broadcastId = broadcastId
     }
 
-    fun setMemberToken(userAccessToken: String) {
-        this.userAccessToken = userAccessToken
+    fun setMode(mode: String) {
+        this.urlPrefix = mode
     }
 
+    /**
+     * Set & Save user access token
+     * @param userAccessToken
+     */
+    fun setMemberToken(userAccessToken: String) {
+        this.userAccessToken = userAccessToken
+
+        val sharedPreference = context.getSharedPreferences("sauceflex", Context.MODE_PRIVATE)
+        val editor = sharedPreference.edit()
+        editor.putString("userAccessToken", userAccessToken)
+        editor.apply()
+    }
+
+    /**
+     * Set & Save member object (Token)
+     */
     fun setMemberObject(
         member: Member,
         callback: MemberObjectCallback
@@ -83,14 +99,24 @@ class SauceLiveView @JvmOverloads constructor(
         )
     }
 
+    /**
+     * Get user access token
+     * @return userAccessToken
+     */
+    fun getMemberToekn(): String? {
+        val sharedPreference = context.getSharedPreferences("sauceflex", Context.MODE_PRIVATE)
+        val userAccessToken = sharedPreference.getString("userAccessToken", null)
+        return userAccessToken
+    }
+
     fun load() {
         if (broadcastId == null) {
             throw Error("broadcastId is required")
         }
         if (userAccessToken == null) {
-            webView.loadUrl("https://player.sauceflex.com/broadcast/$broadcastId")
+            webView.loadUrl("https://${urlPrefix}player.sauceflex.com/broadcast/$broadcastId")
         } else {
-            webView.loadUrl("https://player.sauceflex.com/broadcast/$broadcastId?accessToken=$userAccessToken")
+            webView.loadUrl("https://${urlPrefix}player.sauceflex.com/broadcast/$broadcastId?accessToken=$userAccessToken")
         }
 
     }

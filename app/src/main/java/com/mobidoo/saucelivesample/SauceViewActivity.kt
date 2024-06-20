@@ -2,6 +2,7 @@ package com.mobidoo.saucelivesample
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
@@ -13,6 +14,7 @@ import com.mobidoo.saucelive.SauceLiveView
 
 class SauceViewActivity : Activity() {
 
+    private var urlPrefix: String = ""
     private lateinit var broadcastId: String
     private lateinit var sauceview: SauceLiveView
     private lateinit var sampleText: TextView
@@ -37,12 +39,14 @@ class SauceViewActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sauceview)
         broadcastId = intent.getStringExtra("broadcastId") ?: ""
+        urlPrefix = intent.getStringExtra("urlPrefix") ?: ""
         init()
     }
 
     private fun init() {
         sauceview = findViewById(R.id.saucelive)
         sauceview.setInit(broadcastId)
+        sauceview.setMode(urlPrefix)
         sauceview.setMemberObject(Member("memberId", "nickName", "30", "m", null), object :
             MemberObjectCallback {
             override fun onSuccess() {
